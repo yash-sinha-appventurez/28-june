@@ -1,0 +1,22 @@
+.container{
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+.login{
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  color: coral;
+  
+  
+}
+.login body{
+  background-color: hotpink;
+}
+body{
+  background-color: aquamarine;
+}
+h3{
+  text-align: center;
+}
