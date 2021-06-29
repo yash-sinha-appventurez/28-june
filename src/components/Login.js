@@ -21,13 +21,13 @@ const Login = ({ history }) => {
   };
 
   return (
-    <div className="container">
+    <div className="container-2">
       <h3> Welcome to Login Page</h3>
-      <div className="box-2-login">
-        <img src="https://mir-s3-cdn-cf.behance.net/user/276/8dde5f179750031.5c45650a8bd7e.jpg" alt='avatar' />
+      <div className="login-box-1">
+        <img id ='login-img'src="https://mir-s3-cdn-cf.behance.net/user/276/8dde5f179750031.5c45650a8bd7e.jpg" alt='avatar' />
       </div>
 
-      <div className="login">
+      <div className="login-box-2">
         <Form onSubmit={submitHandler}>
           <Form.Group className="mb-3" controlId="formBasicEmail">
             <Form.Label>Email address</Form.Label>

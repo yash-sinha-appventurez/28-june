@@ -26,13 +26,16 @@ const [singleBlog,setsingleBlog] =useState({})
   }, [id]);
   return (
     <Fragment>
-      <div className="detail-container">
+      <div className="container-4">
+        <div className='detail-box-1'>
         <h1>hello from detail id is  {id}</h1>
         <h5>Title</h5>
         <p>{singleBlog.title}</p>
         <h5>Body</h5>
         <p>{singleBlog.body}</p>
       </div>
+        </div>
+      
     </Fragment>
   );
 };
