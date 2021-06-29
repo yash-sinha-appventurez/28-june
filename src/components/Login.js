@@ -1,38 +1,33 @@
 import React, { useState } from "react";
 import { Form, Button } from "react-bootstrap";
-const Login = () => {
+const Login = ({ history }) => {
   const userInfoFromStorage = localStorage.getItem("userInfo")
     ? JSON.parse(localStorage.getItem("userInfo"))
     : null;
   const [emailLogin, setEmailLogin] = useState("");
   const [passwordLogin, setPasswordLogin] = useState("");
-  const [image,setImage]=useState('')
 
-  const { name, password, email } = userInfoFromStorage;
-  console.log(name, password, email);
-
-    const uploadFileHandler=(e)=>{
-        const file=e.target.files[0]
-        
-    }
-
+  const {password,email,} = userInfoFromStorage;
 
 
   const submitHandler = (e) => {
     e.preventDefault();
-    if(emailLogin===email && passwordLogin===password){
-            alert("hurray successfully login")
+    if (emailLogin === email && passwordLogin === password) {
+      alert("hurray successfully login");
+      history.push("/dashboard");
+    } else {
+      alert("oops wrong password or email");
     }
-    else{
-            alert("oops wrong password or email")
-    }
-
   };
 
   return (
-    <div className='container'>
-      <h3 > Welcome to Login Page</h3>
-      <div className='login'>
+    <div className="container">
+      <h3> Welcome to Login Page</h3>
+      <div className="box-2-login">
+        <img src="https://mir-s3-cdn-cf.behance.net/user/276/8dde5f179750031.5c45650a8bd7e.jpg" alt='avatar' />
+      </div>
+
+      <div className="login">
         <Form onSubmit={submitHandler}>
           <Form.Group className="mb-3" controlId="formBasicEmail">
             <Form.Label>Email address</Form.Label>
@@ -53,22 +48,7 @@ const Login = () => {
               onChange={(e) => setPasswordLogin(e.target.value)}
             />
           </Form.Group>
-          <Form.Group controlId="image">
-              <Form.Label>Image</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Enter image url"
-                value={image}
-                onChange={(e) => setImage(e.target.value)}
-              ></Form.Control>
-              <Form.File
-                id="image-file"
-                label="Choose File"
-                custom
-                onChange={uploadFileHandler}
-              ></Form.File>
-              
-            </Form.Group>
+
           <Button variant="primary" type="submit">
             Submit
           </Button>
