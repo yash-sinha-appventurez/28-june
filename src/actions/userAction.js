@@ -2,7 +2,13 @@ import {
   USER_REGISTER_REQUEST,
   USER_REGISTER_FAIL,
   USER_REGISTER_SUCCESS,
+  USER_LOGIN_REQUEST,
+  USER_LOGIN_SUCCESS,
+  USER_LOGIN_FAIL,
 } from "../constants/userConstant";
+import {getLocalstorage, setLocalstorage} from '../utils/isAuth'
+
+
 
 
 export const register=(name,email,password,image)=>async(dispatch)=>{
@@ -14,7 +20,7 @@ export const register=(name,email,password,image)=>async(dispatch)=>{
      data.email=email
      data.image=image
      dispatch({type:USER_REGISTER_SUCCESS,payload:data})
-     localStorage.setItem("userInfo",JSON.stringify(data))
+      setLocalstorage(data)
    }
    catch{
        dispatch({
@@ -23,3 +29,25 @@ export const register=(name,email,password,image)=>async(dispatch)=>{
        })
    }
 }
+
+export const login=(email,password)=>async(dispatch,)=>{
+const data={email:"",password:""}
+
+  dispatch({type:USER_LOGIN_REQUEST})
+  data.email=getLocalstorage().email
+  data.password=getLocalstorage().password
+  if(email===data.email && password===data.password){
+  dispatch({type:USER_LOGIN_SUCCESS})
+  }
+  else{
+  dispatch({type:USER_LOGIN_FAIL})
+  
+  }
+
+}
+
+
+
+
+
+

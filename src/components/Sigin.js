@@ -3,17 +3,22 @@ import { Form, Button } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { register } from "../actions/userAction";
 import { decimal } from "../constants/regex";
-const Sigin = ({ history }) => {
+import {useHistory} from 'react-router-dom'
+
+const Sigin = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [image, setImage] = useState("");
 
   const dispatch = useDispatch();
+  const history =useHistory()
+
+
 
   const uploadFileHandler = (e) => {
     if (e.target.files.length !== 0) {
-      // usiong the target file to grab the file
+      // using the target file to grab the file
       const file = URL.createObjectURL(e.target.files[0]);
       setImage(file);
     }
@@ -28,7 +33,7 @@ const Sigin = ({ history }) => {
         setName("");
         setPassword("");
         setEmail("");
-        history.push(`/login`);
+        history.push(`/dashboard`);
       } else {
         alert(
           " 8 to 15 characters which contain at least one lowercase letter, one uppercase letter, one numeric digit, and one special character"
@@ -37,7 +42,6 @@ const Sigin = ({ history }) => {
     }
   };
 
-  console.log(decimal);
   return (
     <div className="container-1">
       <div className="sigin-box-1">

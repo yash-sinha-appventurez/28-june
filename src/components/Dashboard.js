@@ -3,31 +3,32 @@ import { useEffect, Fragment } from "react";
 import { Link } from "react-router-dom";
 import { Table } from "react-bootstrap";
 import { fetchPostAction } from "../actions/fetchBlog";
+import {getLocalstorage} from '../utils/isAuth'
+
 const Dashboard = ({ history }) => {
   const dispatch = useDispatch();
 
   const fetchBlog = useSelector((state) => state.fetchBlog);
   const { blog } = fetchBlog;
 
-  const userInfoFromStorage = localStorage.getItem("userInfo")
-    ? JSON.parse(localStorage.getItem("userInfo"))
-    : null;
-
+ 
   useEffect(() => {
-    if (!userInfoFromStorage) {
-      history.push("/");
-    } else {
-      dispatch(fetchPostAction());
-    }
+      if(getLocalstorage()){
+        dispatch(fetchPostAction())
+      }
+      else{
+        console.log('problem in fetching')
+      }
   }, []);
 
   return (
+
     <Fragment>
       <div className="container-3">
         <div className='dashboard-box-1'>
-        <h4>hello {userInfoFromStorage.name} </h4>
-        <img id="dashboard-img" src={userInfoFromStorage.image} alt="Avatar" />
-        <h4>emailid: {userInfoFromStorage.email} </h4>
+        <h4>hello {getLocalstorage().name} </h4>
+        <img id="dashboard-img" src={getLocalstorage().image} alt="Avatar" />
+        <h4>emailid: {getLocalstorage().email} </h4>
 
         </div>
         
