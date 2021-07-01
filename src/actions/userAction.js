@@ -13,12 +13,14 @@ import {getLocalstorage, setLocalstorage} from '../utils/isAuth'
 
 export const register=(name,email,password,image)=>async(dispatch)=>{
     const data={name:"",password:"",email:"",image:""}
+    const audio='will add later'
    try{
     dispatch({type:USER_REGISTER_REQUEST})
      data.name=name
      data.password=password
      data.email=email
      data.image=image
+     data.audio=audio
      dispatch({type:USER_REGISTER_SUCCESS,payload:data})
       setLocalstorage(data)
    }

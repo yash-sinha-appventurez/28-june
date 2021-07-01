@@ -3,13 +3,16 @@ import { Form, Button } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { register } from "../actions/userAction";
 import { decimal } from "../constants/regex";
-import {useHistory} from 'react-router-dom'
+import {useHistory,Link} from 'react-router-dom'
+
+
 
 const Sigin = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [image, setImage] = useState("");
+  
 
   const dispatch = useDispatch();
   const history =useHistory()
@@ -88,6 +91,8 @@ const Sigin = () => {
           <Button variant="primary" type="submit">
             Submit
           </Button>
+          <Link to='/login'> <Button>Login</Button></Link>
+          <Link to='/audiotrial'><Button>Audio trial</Button></Link>
         </Form>
       </div>
     </div>

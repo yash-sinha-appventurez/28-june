@@ -1,47 +1,86 @@
-import React, { Component } from 'react'
+import React, { Component } from "react";
+import MicRecorder from "mic-recorder-to-mp3";
+import { Button } from "react-bootstrap";
+import     {getLocalstorage, setLocalstorage}       from  '../utils/isAuth'
 
+
+
+const Mp3Recorder = new MicRecorder({ bitRate: 128 });
 export default class Audio extends Component {
-    state={car:{color:'red'},counter:1,msg:'hello yash',ar:[]}
-  myref=React.createRef()
-  handleClick=()=>{
-      this.myref.current.focus()
-  }
-    render() {
-
-        var device =navigator.mediaDevices.getUserMedia({audio:true})
-        var items=[]
-        device.then(stream=>{
-            var recorder =new MediaRecorder(stream)
-            recorder.ondataavilable=e=>{
-                items.push(e.data)
-                if(recorder.state==='inactive'){
-                    var blob=new Blob(items,{type:'audio/webm'})
-                    var audio=document.getElementById('audio')
-                   var minaudio=document.createElement('audio')
-                    minaudio.setAttribute('controls','controls')
-                    audio.appendChild(minaudio)
-                    minaudio.innerHtml=`<source src="`+URL.createObjectURL(blob)+`"type="video.webm"/>`
-                }
-            }
-            recorder.start(100)
-            setTimeout(() => {
-                recorder.stop() 
-            }, 5000);
-        })
-
-     
-
-console.log(this.state)
-
-
-        return (
-            <div className='container-5'>
-                <h1> hello from Audio recording</h1>
-                <div className='audio ' id='audio' ref={'audio'}></div>
-                <input type='text' ref={this.myref}></input>
-                <button onClick={this.handleClick}>Focus</button>
-             
-            </div>
-        )
+    state={
+        isRecording: false,
+        blobURL: "",
+        isBlocked: false,  
+        text:""
     }
+  componentDidMount() {
+      console.log(getLocalstorage())
+      const ch=getLocalstorage()
+      console.log(ch.audio)
+      
+    navigator.getUserMedia(
+      { audio: true },
+      () => {
+        console.log("Permission Granted");
+        this.setState({ isBlocked: false });
+      },
+      () => {
+        console.log("Permission Denied");
+        this.setState({ isBlocked: true });
+      }
+    );
+  }
+   start = () => {
+    console.log("click");
+
+    if (this.state.isBlocked) {
+      console.log("Permission Denied");
+    } else {
+      Mp3Recorder.start()
+        .then(() => {
+          this.setState({ isRecording: true });
+        })
+        .catch((e) => console.error(e));
+    }
+  };
+   stop = () => {
+    Mp3Recorder
+      .stop()
+      .getMp3()
+      .then(([buffer, blob]) => {
+        const blobURL = URL.createObjectURL(blob)
+        this.setState({ blobURL, isRecording: false });
+        getLocalstorage()
+      }).catch((e) => console.log(e));
+  };
+
+  componentDidUpdate(){
+      if(this.state.blobURL){
+         const ch=getLocalstorage()
+         ch.audio=this.state.blobURL
+         setLocalstorage(ch)
+         
+      }
+  }
+
+  
+  render() {
+    return (
+      <div className='container-5'>
+        <h1>hello from audio recording</h1>
+        <div className='audio-box-1'>
+        <Button onClick={()=>{this.start()}} disabled={this.state.isRecording}>
+          Record{" "}
+        </Button>
+        <Button variant='danger' onClick={()=>{this.stop()}} disabled={!this.state.isRecording}>
+          Stop
+        </Button>
+        <audio src={this.state.blobURL} controls="controls" />
+        </div>
+        
+       
+      </div>
+      
+    );
+  }
 }

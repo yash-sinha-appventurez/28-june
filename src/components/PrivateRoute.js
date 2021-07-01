@@ -6,7 +6,7 @@ const PrivateRoute = ({ children, ...rest }) => {
     <Route
       {...rest}
       render={() =>
-        getLocalstorage() ? children : <Redirect to={"/"} />
+        getLocalstorage()   ? children : <Redirect to={"/"} />
       }
     />
   );
