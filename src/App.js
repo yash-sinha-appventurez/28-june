@@ -7,7 +7,8 @@ import { Route, BrowserRouter as Router } from "react-router-dom";
 import PrivateRoute from "./components/PrivateRoute";
 import { PublicRoute } from "./components/PublicRoute";
 import Audio from "./components/Audio";
-import Audiotrial from "./components/Audiotrial";
+import Checklist from "./components/Checklist";
+
 function App() {
   return (
     <Router>
@@ -19,6 +20,7 @@ function App() {
         </PrivateRoute>
         <PrivateRoute component={Detail} exact path="/detail/:id" />
         <Route path="/audio" component={Audio} />
+        <Route path="/checklist" component={Checklist} />
         {/* <Route path="/detail/:id" component={Detail} /> */}
         {/* <Route path="/audiotrial" component={Audiotrial} /> */}
       </div>
